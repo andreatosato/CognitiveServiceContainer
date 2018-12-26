@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  cognitiveapp:
+    image: ${DOCKER_REGISTRY-}cognitiveapp
+    build:
+      context: .
+      dockerfile: CognitiveApp/Dockerfile
+  sentiment:
+    image: mcr.microsoft.com/azure-cognitive-services/sentiment
+    ports:
+      - "5000:5000"
+    environment:
+      - Eula=accept
+      - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
+      - ApiKey=a43b6e677dba4f60bcee7516a29b9e14
