@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CognitiveApp.Cognitive;
+using CognitiveApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -13,6 +14,12 @@ namespace CognitiveApp.Pages
     public class ContactModel : PageModel
     {
         public string Message { get; set; }
+        public double Score { get; set; }
+        private ISentimentService _sentimentService;
+        public ContactModel(ISentimentService sentimentService)
+        {
+            _sentimentService = sentimentService;
+        }
 
         public void OnGet()
         {
@@ -21,34 +28,34 @@ namespace CognitiveApp.Pages
 
         public async Task OnPostProva()
         {
-            try
+            SentimentRequest data = new SentimentRequest()
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:5000/text/analytics/v2.0/");
-                CognitiveData data = new CognitiveData()
+                Documents = new[]
                 {
-                    Documents = new[]
+                    new DocumentRequest()
                     {
-                        new Document()
-                        {
-                            Language = "it",
-                            Text = "Ciao sono Cristiano"
-                        }
-                    }.ToList()
-                };
-                
-                var httpResult = await client.PostAsJsonAsync("sentiment", JsonConvert.SerializeObject(data));
-                if (httpResult.IsSuccessStatusCode)
-                {
-                    var r = httpResult.Content;
-                }
-            }
-            catch (Exception ex)
-            {
+                        Language = "it",
+                        Text = "Ciao sono Cristiano"
+                    }
+                }.ToList()
+            };
 
-                throw;
-            }
-           
+
+            Score = await _sentimentService.GetSingleSentiment(data.Documents.First());
+
+            //            var requestText = JsonConvert.SerializeObject(data);
+            //var httpResult = await client.PostAsJsonAsync("text/analytics/v2.0/sentiment", data);
+            //if (httpResult.IsSuccessStatusCode)
+            //{
+            //    var resultComplete = await httpResult.Content.ReadAsStringAsync();
+            //    var response = JsonConvert.DeserializeObject<SentimentResponse>(resultComplete);
+            //    Score = response.Documents[0].Score;
+            //}
+            //else
+            //{
+            //    var resultError = await httpResult.Content.ReadAsStringAsync();
+            //}
+
         }
     }
 }

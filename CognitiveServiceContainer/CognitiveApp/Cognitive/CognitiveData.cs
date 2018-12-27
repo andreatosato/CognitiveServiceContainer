@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CognitiveApp.Cognitive
 {
-    public class CognitiveData
+    public class SentimentRequest
     {
         [JsonProperty("documents")]
-        public List<Document> Documents { get; set; }
+        public List<DocumentRequest> Documents { get; set; }
     }
     
-    public partial class Document
+    public class DocumentRequest
     {
         [JsonProperty("language")]
         public string Language { get; set; }
@@ -21,5 +21,23 @@ namespace CognitiveApp.Cognitive
         [JsonProperty("text")]
         public string Text { get; set; }
     }
+
+
+    public class SentimentResponse
+    {
+        [JsonProperty("documents")]
+        public List<DocumentResponse> Documents { get; set; }
+        [JsonProperty("errors")]
+        public List<object> Errors { get; set; }
+    }
+
+    public class DocumentResponse
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+        [JsonProperty("score")]
+        public double Score { get; set; }
+    }
+
 
 }

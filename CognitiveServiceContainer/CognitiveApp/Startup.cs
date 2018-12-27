@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CognitiveApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,11 @@ namespace CognitiveApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddHttpClient<ISentimentService, SentimentService>(c => 
+            {
+                c.BaseAddress = new Uri("http://sentiment.api:5000/");
+            });
+            services.AddTransient<ISentimentService, SentimentService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -47,7 +53,7 @@ namespace CognitiveApp
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

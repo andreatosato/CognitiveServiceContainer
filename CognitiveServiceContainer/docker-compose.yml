@@ -6,10 +6,25 @@ services:
     build:
       context: .
       dockerfile: CognitiveApp/Dockerfile
-  sentiment:
+    depends_on:
+      - sentiment.api
+      - language.api
+  sentiment.api:
     image: mcr.microsoft.com/azure-cognitive-services/sentiment
+    expose:
+      - "5000"
     ports:
       - "5000:5000"
+    environment:
+      - Eula=accept
+      - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
+      - ApiKey=a43b6e677dba4f60bcee7516a29b9e14
+  language.api:
+    image: mcr.microsoft.com/azure-cognitive-services/language
+    expose:
+      - "5000"
+    ports:
+      - "5001:5000"
     environment:
       - Eula=accept
       - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
