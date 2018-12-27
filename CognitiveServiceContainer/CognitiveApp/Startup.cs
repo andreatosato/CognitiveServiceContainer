@@ -32,11 +32,11 @@ namespace CognitiveApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddHttpClient<ISentimentService, SentimentService>(c => 
+            services.AddTransient<ISentimentService, SentimentService>();
+            services.AddHttpClient<ISentimentService, SentimentService>("SentimentClient", c => 
             {
                 c.BaseAddress = new Uri("http://sentiment.api:5000/");
-            });
-            services.AddTransient<ISentimentService, SentimentService>();
+            });           
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
