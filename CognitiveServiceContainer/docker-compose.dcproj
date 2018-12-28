@@ -3,12 +3,21 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>d070332a-0f4a-442c-82b7-493a617e9973</ProjectGuid>
+    <ProjectGuid>bc2c21a8-dc7d-42ca-b010-4e614b1b5bd5</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>cognitiveapp</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="CustomVision.DockerFile.Linux\app\app.py" />
+    <None Include="CustomVision.DockerFile.Linux\app\labels.txt" />
+    <None Include="CustomVision.DockerFile.Linux\app\model.pb" />
+    <None Include="CustomVision.DockerFile.Linux\app\predict.py" />
+    <None Include="CustomVision.DockerFile.Linux\app\requirements.txt" />
+    <None Include="CustomVision.DockerFile.Linux\azureml\README.txt" />
+    <None Include="CustomVision.DockerFile.Linux\azureml\score.py" />
+    <None Include="CustomVision.DockerFile.Linux\Dockerfile" />
+    <None Include="CustomVision.DockerFile.Linux\README.txt" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>

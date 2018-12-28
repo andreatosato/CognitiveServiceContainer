@@ -9,6 +9,12 @@ services:
     depends_on:
       - sentiment.api
       - language.api
+      - customvision.api
+  customvision.api:
+    image: ${DOCKER_REGISTRY-}customvision.api
+    build:
+      context: .
+      dockerfile: CustomVision.DockerFile.Linux/Dockerfile
   sentiment.api:
     image: mcr.microsoft.com/azure-cognitive-services/sentiment
     expose:

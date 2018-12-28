@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Language Detection";
+}
+@model LanguageDetectionViewModel
+
+<form asp-controller="LanguageDetection" asp-action="DetectLanguage" method="post">
+    <div class="form-group">
+        <label for="text">Inserisci una frase di prova</label>
+        <input type="text" id="text" name="text" class="form-control" placeholder="Inserisci una frase di prova" />
+    </div>
+    <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
+<br />
+@if (Model != null)
+{
+    <div class="text-center">
+        <div class="row">
+            <div class="col-md-4"><b>Name</b></div>
+            <div class="col-md-4"><b>Iso 6391</b></div>
+            <div class="col-md-4"><b>Score</b></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">@Model.Name</div>
+            <div class="col-md-4">@Model.Iso6391Name</div>
+            <div class="col-md-4">@Model.Score</div>
+        </div>
+    </div>
+}
+<br />
+<div class="jumbotron">
+    <h1 class="display-4">Esempi</h1>
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+</div>

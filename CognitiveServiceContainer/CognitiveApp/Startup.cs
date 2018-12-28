@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,13 +32,18 @@ namespace CognitiveApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<ISentimentService, SentimentService>();
-            services.AddHttpClient<ISentimentService, SentimentService>("SentimentClient", c => 
+            services.AddHttpClient<ISentimentService, SentimentService>("SentimentClient", c =>
             {
                 c.BaseAddress = new Uri("http://sentiment.api:5000/");
-            });           
+            });
+            services.AddHttpClient<ILanguageService, LanguageService>("LanguageClient", c =>
+            {
+                c.BaseAddress = new Uri("http://language.api:5000/");
+            });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,15 +55,21 @@ namespace CognitiveApp
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

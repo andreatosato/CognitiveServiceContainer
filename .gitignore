@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Training e Test image
+/Training
+/TestCustomVision
+
 # User-specific files
 *.suo
 *.user
@@ -329,3 +333,5 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /Database
+/CognitiveApp
+/CustomVision.DockerFile.Linux.zip
