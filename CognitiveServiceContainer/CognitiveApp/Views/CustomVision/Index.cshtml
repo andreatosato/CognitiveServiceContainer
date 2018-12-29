@@ -3,10 +3,20 @@
 }
 @model CustomVisionViewModel
 
+<h1> FROM URL</h1>
 <form asp-controller="CustomVision" asp-action="FromUrl" method="post">
     <div class="form-group">
         <label for="url">Inserisci un URL di una immagine pubblica</label>
         <input type="text" id="url" name="url" class="form-control" placeholder="Inserisci un URL di una immagine pubblica" />
+    </div>
+    <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
+<br />
+<h1> FROM INPUT</h1>
+<form asp-controller="CustomVision" asp-action="FromByteArray" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="url">Carica una immagine locale</label>
+        <input type="file" name="imageSource" id="imageSource" class="form-control-file"/>
     </div>
     <button type="submit" class="btn btn-primary">Analizza</button>
 </form>

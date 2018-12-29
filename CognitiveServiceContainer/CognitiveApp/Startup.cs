@@ -22,6 +22,9 @@ namespace CognitiveApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var predictionKey = Configuration.GetValue<string>("CognitiveService:CustomVision:Prediction-Key");
+            var projectId = Configuration.GetValue<string>("CognitiveService:CustomVision:Project-Id");
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -44,13 +47,13 @@ namespace CognitiveApp
             services.AddHttpClient<ICustomVision, CustomVision>("CustomVisionClient", c =>
             {
                 c.BaseAddress = new Uri("http://customvision.api/");
-                c.DefaultRequestHeaders.Add("Prediction-Key", "eebf9f63e0c94fd295ab462a8fd93bac");
+                c.DefaultRequestHeaders.Add("Prediction-Key", predictionKey);
             });
 
             services.AddTransient<ICustomVision, CustomVision>(service =>
             {
                 var clientFactory = service.GetRequiredService<IHttpClientFactory>();
-                return new CustomVision(clientFactory.CreateClient("CustomVisionClient"), "1cec166c-ab17-4ec1-af53-5984e6e8ee71");
+                return new CustomVision(clientFactory.CreateClient("CustomVisionClient"), projectId);
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

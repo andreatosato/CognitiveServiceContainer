@@ -11,6 +11,12 @@ namespace CognitiveApp.Entities
         public string Url { get; set; }
     }
 
+    public class CustomVisionStreamRequest
+    {
+        [JsonProperty("imageData")]
+        public byte[] ImageData { get; set; }
+    }
+
     public partial class CustomVisionResponse
     {
         [JsonProperty("id")]

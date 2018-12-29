@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,13 @@ namespace CognitiveApp.Services
             _projectId = projectId;
         }
 
-        public async Task<CustomVisionResponse> FromByteArrayImage(Uri payloadImage)
+        public async Task<CustomVisionResponse> FromByteArrayImage(Stream payloadImage)
         {
-            throw new NotImplementedException();
+            StreamContent payloadContent = new StreamContent(payloadImage);
+            payloadContent.Headers.Add("Content-Type", "application/octet-stream");
+            var response = await _client.PostAsync($"{_projectId}/image", payloadContent);
+            response.EnsureSuccessStatusCode();
+            return JsonConvert.DeserializeObject<CustomVisionResponse>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<CustomVisionResponse> FromUrlImage(Uri urlImage)
