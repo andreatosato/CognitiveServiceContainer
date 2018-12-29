@@ -1,8 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model CustomVisionViewModel
 
+<form asp-controller="CustomVision" asp-action="FromUrl" method="post">
+    <div class="form-group">
+        <label for="url">Inserisci un URL di una immagine pubblica</label>
+        <input type="text" id="url" name="url" class="form-control" placeholder="Inserisci un URL di una immagine pubblica" />
+    </div>
+    <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
+<br />
+@if (Model != null)
+{
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="row">
+        <div class="col-md-4"><b>TagId</b></div>
+        <div class="col-md-4"><b>Tag Name</b></div>
+        <div class="col-md-4"><b>Probability</b></div>
+    </div>
+    @foreach (var element in Model.Predictions)
+    {
+        <div class="row">
+            <div class="col-md-4">@element.TagId</div>
+            <div class="col-md-4">@element.TagName</div>
+            <div class="col-md-4">@element.Probability</div>
+        </div>
+    }
+</div>
+}
+<br />
+<div class="jumbotron">
+    <h1 class="display-4">Esempi</h1>
+    <p>Esempi di immagini utilizzati:</p>
+    <a href="https://github.com/Horea94/Fruit-Images-Dataset" class="btn-link">Dataset</a>
 </div>

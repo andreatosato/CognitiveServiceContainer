@@ -13,8 +13,12 @@ services:
   customvision.api:
     image: ${DOCKER_REGISTRY-}customvision.api
     build:
-      context: .
-      dockerfile: CustomVision.DockerFile.Linux/Dockerfile
+      context: './CustomVision.DockerFile.Linux'
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    ports:
+      - "8081:80"
   sentiment.api:
     image: mcr.microsoft.com/azure-cognitive-services/sentiment
     expose:
