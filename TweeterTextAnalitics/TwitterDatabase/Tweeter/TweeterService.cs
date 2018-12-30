@@ -18,24 +18,28 @@ namespace TwitterDatabase.Tweeter
             _currentUser = User.GetAuthenticatedUser();
         }
 
-        public List<TweeterResult> SearchAll(string searchQuery, string keyword)
+        public async Task SearchAll(string searchQuery, string keyword, TweeterServiceData tweeterServiceData)
         {
             List<TweeterResult> result = new List<TweeterResult>();
-            var searchParameter = new SearchTweetsParameters(searchQuery) { TweetSearchType = TweetSearchType.OriginalTweetsOnly };
+            var searchParameter = new SearchTweetsParameters(searchQuery) { TweetSearchType = TweetSearchType.All };
             IEnumerable<ITweet> tweets = Search.SearchTweets(searchParameter);
             try
             {
                 if (tweets != null)
                 {
-                    result.AddRange(ManualMap(tweets, keyword));
+                    result.AddRange(await ManualMap(tweets, keyword));
+                    await tweeterServiceData.SaveCollection(result);
+                    result.Clear();
                     while (tweets != null && tweets.Any())
                     {
                         long maxId = tweets.Min(x => x.Id);
                         searchParameter.MaxId = maxId;
                         tweets = Search.SearchTweets(searchParameter);
-                        if(tweets != null)
-                            result.AddRange(ManualMap(tweets, keyword));
+                        if (tweets != null)
+                            result.AddRange(await ManualMap(tweets, keyword));
                         Console.WriteLine($"{searchQuery} - element loaded: {result.Count}");
+                        await tweeterServiceData.SaveCollection(result);
+                        result.Clear();
                     }
                 }
             }
@@ -45,39 +49,41 @@ namespace TwitterDatabase.Tweeter
 
             }
             
-            return result;
         }
 
-        private List<TweeterResult> ManualMap(IEnumerable<ITweet> old, string keyword)
+        private async Task<List<TweeterResult>> ManualMap(IEnumerable<ITweet> old, string keyword)
         {
             List<TweeterResult> mapped = new List<TweeterResult>();
-            foreach (var o in old)
+            foreach (var o in old.Where(x => !x.IsRetweet))
             {
-                if (!string.IsNullOrEmpty(o.InReplyToScreenName) ||
-                    !string.IsNullOrEmpty(o.InReplyToUserIdStr) ||
-                    !string.IsNullOrEmpty(o.InReplyToStatusIdStr))
-                    mapped.Add(new TweeterResult
+                var tweet = new TweeterResult
+                {
+                    RetweetCount = o.RetweetCount,
+                    FavoriteCount = o.FavoriteCount,
+                    Id = o.Id,
+                    //UserMentions = o.Entities.UserMentions.Select(x => new UserMention { Id = x.Id.Value, IdStr = x.IdStr, Name = x.Name, ScreenName = x.ScreenName }).ToList(),                        
+                    QuoteCount = o.QuoteCount,
+                    CreatedAt = o.CreatedAt,
+                    Text = o.Text,
+                    FullText = o.FullText,
+                    Language = o.Language,
+                    SearchKey = keyword
+                };
+
+                if(o.RetweetCount > 0)
+                {
+                    foreach (var r in await o.GetRetweetsAsync())
                     {
-                        RetweetCount = o.RetweetCount,
-                        FavoriteCount = o.FavoriteCount,
-                        Favorited = o.Favorited,
-                        Retweeted = o.Retweeted,
-                        Id = o.Id,
-                        TweetLocalCreationDate = o.TweetLocalCreationDate,
-                        Hashtags = o.Entities.Hashtags.Select(x => new HashtagEntity { Text = x.Text }).ToList(),
-                        UserMentions = o.Entities.UserMentions.Select(x => new UserMention { Id = x.Id, IdStr = x.IdStr, Name = x.Name, ScreenName = x.ScreenName }).ToList(),
-                        IsRetweet = o.IsRetweet,
-                        RetweetedTweetId = o.RetweetedTweet?.Id,
-                        QuoteCount = o.QuoteCount,
-                        QuotedTweetId = o.QuotedTweet?.Id,
-                        CreatedAt = o.CreatedAt,
-                        Text = o.Text,
-                        Prefix = o.Prefix,
-                        Suffix = o.Suffix,
-                        FullText = o.FullText,
-                        Language = o.Language,
-                        Keyword = keyword
-                    });
+                        tweet.Retweets.Add(new Retweeted()
+                        {
+                            CreatedAt = r.CreatedAt,
+                            Id = r.Id,
+                            RetweetedTweetId = r.RetweetedTweet.Id,
+                            Text = r.Text
+                        });
+                    }
+                }
+                mapped.Add(tweet);
             }
             return mapped;
         }

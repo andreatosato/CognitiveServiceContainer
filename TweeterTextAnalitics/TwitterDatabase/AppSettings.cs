@@ -6,6 +6,7 @@ namespace TwitterDatabase
 {
     public class AppSettings
     {
+        public string ConnectionString { get; set; }
         public TwitterSettings Twitter {get; set;}
     }
 

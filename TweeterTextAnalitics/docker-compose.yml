@@ -13,8 +13,6 @@ services:
     image: mcr.microsoft.com/azure-cognitive-services/sentiment
     expose:
       - "5000"
-    ports:
-      - "5000:5000"
     environment:
       - Eula=accept
       - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
@@ -23,8 +21,6 @@ services:
     image: mcr.microsoft.com/azure-cognitive-services/language
     expose:
       - "5000"
-    ports:
-      - "5001:5000"
     environment:
       - Eula=accept
       - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0

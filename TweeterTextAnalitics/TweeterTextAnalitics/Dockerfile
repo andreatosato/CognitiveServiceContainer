@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:2.1-runtime AS base
+FROM microsoft/dotnet:2.2-runtime AS base
 WORKDIR /app
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
-COPY TweeterTextAnalitics/TweeterTextAnalitics.csproj TweeterTextAnalitics/
+COPY TweeterTextAnalitics/TweeterTextAnalitics.csproj TweeterTextAnalitics/appsettings.json TweeterTextAnalitics/
 RUN dotnet restore TweeterTextAnalitics/TweeterTextAnalitics.csproj
 COPY . .
 WORKDIR /src/TweeterTextAnalitics
