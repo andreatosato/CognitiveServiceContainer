@@ -1,3 +1,3 @@
-docker login demosessionsregistry.azurecr.io -u DemoSessionsRegistry -p kt+CMuLaXOfW3p9hROCfakjrK57R2wao
+docker login registrydemosession.azurecr.io -u registrydemosession -p /OWe5RU3uIvvVQf9bvQAbkN22S0wSZdZ
 
 docker-compose up
