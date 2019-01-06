@@ -3,6 +3,6 @@ version: '3.4'
 services:
   cognitiveapp:
   environment:
-    - DOCKER_REGISTRY-=demosessionsregistry.azurecr.io
+    - DOCKER_REGISTRY-=registrydemosession.azurecr.io
   customvision.api:
-    - DOCKER_REGISTRY-=demosessionsregistry.azurecr.io
+    - DOCKER_REGISTRY-=registrydemosession.azurecr.io
