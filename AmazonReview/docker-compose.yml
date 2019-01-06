@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  amazonreview:
+    image: ${DOCKER_REGISTRY-}amazonreview
+    build:
+      context: .
+      dockerfile: AmazonReview/Dockerfile
+    depends_on:
+      - sentiment.api
+  sentiment.api:
+    image: mcr.microsoft.com/azure-cognitive-services/sentiment
+    expose:
+      - "5000"
+    environment:
+      - Eula=accept
+      - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
+      - ApiKey=b4b8e37f2bcc4b3b9731df8f0a8a773e

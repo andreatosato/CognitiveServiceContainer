@@ -1,42 +1,7 @@
-﻿
-//using System;
-//using System.Collections.Generic;
-//using System.Text;
-
-//namespace TwitterDatabase.Tweeter
-//{
-//    public class TweeterDatabase : IDisposable
-//    {
-//        private LiteDatabase db;
-//        public TweeterDatabase()
-//        {
-//            db = new LiteDatabase(@"Filename=E:\Progetti\CognitiveServiceContainer\Database\twDatabase.db");
-//        }
-
-//        public void SaveData(IEnumerable<TweeterResult> result, CollectionType collectionType)
-//        {
-//            var dbCollection = db.GetCollection<TweeterResult>(Enum.GetName(typeof(CollectionType), collectionType));
-//            foreach (var item in result)
-//            {
-//                dbCollection.Upsert(item);
-//            }
-//        }
-
-//        public void Dispose()
-//        {
-//            db.Dispose();
-//        }
-//    }
-
-//    public enum CollectionType
-//    {
-//        Player,
-//        Team
-//    }
-//}
-
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,7 +22,7 @@ namespace TwitterDatabase.Tweeter
                 try
                 {
                     var alreadyExist = await db.Tweets.FindAsync(item.Id);
-                    if (alreadyExist != null)
+                    if (alreadyExist != null) // Nothing to do
                     {
                         //db.Entry<TweeterResult>(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         //db.Tweets.Attach(item);
@@ -76,6 +41,14 @@ namespace TwitterDatabase.Tweeter
                 }
                 
             }
+        }
+
+        public async Task<long?> GetMinId(string searchKey)
+        {
+            var tweet = await db.Tweets.FirstOrDefaultAsync(x => x.SearchKey == searchKey);
+            if (tweet != null)
+                return tweet.Id;
+            return null;
         }
 
         public void Dispose()

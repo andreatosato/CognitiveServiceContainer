@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CognitiveApp.Services;
+using FluentScheduler;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Models;
@@ -17,16 +20,67 @@ namespace TwitterDatabase
         {
             string jsonContent = await File.ReadAllTextAsync($@"{Environment.CurrentDirectory}/appsettings.json");
             AppSettings settings = JsonSerializer.ConvertJsonTo<AppSettings>(jsonContent);
+            string conn = settings.ConnectionString;
+            var db = GetDb(conn);
+            System.Net.Http.HttpClient sentimentClient = new System.Net.Http.HttpClient() { BaseAddress = new Uri("http://sentiment.api:5000") };
+            TweeterSentiment tweeterSentiment = new TweeterSentiment(new SentimentService(sentimentClient));
+            await EseguiAsync("CristianoRonaldo", tweeterSentiment, db);
+            await EseguiAsync("Higuain", tweeterSentiment, db);
+            await EseguiAsync("Ibra", tweeterSentiment, db);
+            await EseguiAsync("Insigne", tweeterSentiment, db);
+            await EseguiAsync("Juventus", tweeterSentiment, db);
+            await EseguiAsync("Milan", tweeterSentiment, db);
+            await EseguiAsync("Nainggolan", tweeterSentiment, db);
+            await EseguiAsync("Napoli", tweeterSentiment, db);
+            await EseguiAsync("Pogba", tweeterSentiment, db);
+            await EseguiAsync("RealMadrid", tweeterSentiment, db);
+        }
 
-            await CristianoRonaldo(settings);
-            //Ibra(settings.Twitter);
-            //Insigne(settings);
+
+        private static async Task EseguiAsync(string searchKey, TweeterSentiment tweeterSentiment, TweeterContext db)
+        {
+            var searchTweet = await db.Tweets.Where(x => x.SearchKey == searchKey).Select(x => new TweeterSentimentEntity
+            {
+                Id = x.Id,
+                Text = x.FullText,
+                Language = GetLanguage(x.Language)
+            }).ToListAsync();
+            var result = await tweeterSentiment.ElaborateList(searchTweet);
+            for (int i = 0; i < result.Count; i++)
+            {
+                var e = result.ElementAt(i);
+                var entity = await db.Tweets.FindAsync(e.Id);
+                if (entity != null && entity.Sentiment == 0)
+                {
+                    entity.Sentiment = e.Sentiment;
+                    entity.LanguageISO6391 = GetLanguage(entity.Language);
+                    if(i % 200 == 0 || i == result.Count - 1)
+                        await db.SaveChangesAsync();
+                }
+            }
+           
+        }
 
 
-            //Juventus(settings.Twitter);
-            //RealMadrid(settings);
-            //Milan(settings);
-            //Napoli(settings);
+        private static string GetLanguage(Language value)
+        {
+            switch (value)
+            {
+                case Language.English:
+                    return "en";
+                case Language.Italian:
+                    return "it";
+                case Language.Portuguese:
+                    return "pt";
+                case Language.French:
+                    return "fr";
+                case Language.German:
+                    return "de";
+                case Language.Spanish:
+                    return "es";
+                default:
+                    return "it";
+            }
         }
 
         private static TweeterContext GetDb(string connectionString)
@@ -35,64 +89,5 @@ namespace TwitterDatabase
             optionsBuilder.UseSqlServer(connectionString);
             return new TweeterContext(optionsBuilder.Options);
         }
-
-
-        public static async Task CristianoRonaldo(AppSettings settings)
-        {
-            TweeterService service = new TweeterService(settings.Twitter);
-            TweeterContext db = GetDb(settings.ConnectionString);
-            await service.SearchAll("@Cristiano OR #CR7", "CristianoRonaldo", new TweeterServiceData(db));
-            //TweeterServiceData tweeterServiceData = new TweeterServiceData(db);
-            //await tweeterServiceData.SaveCollection(result);
-        }
-        /*
-        public static void Insigne(TwitterSettings settings)
-        {
-            TweeterService service = new TweeterService(settings);
-            TweeterServiceData db = new TweeterServiceData();
-            var result = service.SearchAll("@Lor_Insigne OR #Insigne", "Insigne");
-            db.SaveData(result, CollectionType.Player);
-        }
-
-        public static void Ibra(TwitterSettings settings)
-        {
-            TweeterService service = new TweeterService(settings);
-            TweeterServiceData db = new TweeterServiceData();
-            var result = service.SearchAll("@Ibra_official OR #Zlatan OR #Ibrahimovic", "Ibra");
-            db.SaveData(result, CollectionType.Player);
-        }
-
-        public static void Juventus(TwitterSettings settings)
-        {
-            TweeterService service = new TweeterService(settings);
-            TweeterServiceData db = new TweeterServiceData();
-            var result = service.SearchAll("@juventusfc OR #Juve OR #Juventus", "Juventus");
-            db.SaveData(result, CollectionType.Team);
-        }
-
-        public static void RealMadrid(TwitterSettings settings)
-        {
-            TweeterService service = new TweeterService(settings);
-            TweeterServiceData db = new TweeterServiceData();
-            var result = service.SearchAll("@realmadrid OR #RealMadrid", "RealMadrid");
-            db.SaveData(result, CollectionType.Team);
-        }
-
-        public static void Milan(TwitterSettings settings)
-        {
-            TweeterService service = new TweeterService(settings);
-            TweeterServiceData db = new TweeterServiceData();
-            var result = service.SearchAll("@acmilan OR #Milan OR #ACMilan", "Milan");
-            db.SaveData(result, CollectionType.Team);
-        }
-
-        public static void Napoli(TwitterSettings settings)
-        {
-            TweeterService service = new TweeterService(settings);
-            TweeterServiceData db = new TweeterServiceData();
-            var result = service.SearchAll("@sscnapoli OR #ForzaNapoliSempre OR @en_sscnapoli", "Napoli");
-            db.SaveData(result, CollectionType.Team);
-        }
-        */
     }
 }

@@ -12,7 +12,6 @@ namespace TwitterDatabase.Tweeter
     {
         public TweeterResult()
         {
-            //UserMentions = new HashSet<UserMention>();
             Retweets = new HashSet<Retweeted>();
         }
 
@@ -25,7 +24,6 @@ namespace TwitterDatabase.Tweeter
         public DateTime CreatedAt { get; set; }
         public string Text { get; set; }
         public string FullText { get; set; }
-        //public ICollection<UserMention> UserMentions {get; set;}
         public Language Language { get; set; }
         public string SearchKey { get; set; }
         public ICollection<Retweeted> Retweets { get; set; }
@@ -46,14 +44,4 @@ namespace TwitterDatabase.Tweeter
         [ForeignKey("RetweetedTweetId")]
         public TweeterResult OriginalTweet { get; set; }
     }
-
-    //public class UserMention
-    //{
-    //    [Key]
-    //    [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    //    public long Id { get; set; }
-    //    public string IdStr { get; set; }
-    //    public string ScreenName { get; set; }
-    //    public string Name { get; set; }
-    //}
 }

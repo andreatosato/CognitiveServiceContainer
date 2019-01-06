@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonReview", "AmazonReview\AmazonReview.csproj", "{64828D4A-2EFA-46DA-94D9-3BF723C9E301}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonDatabase", "AmazonDatabase\AmazonDatabase.csproj", "{132EFECE-093A-4BD6-A65C-C2CF0840EB19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonDatabase.Entity", "AmazonDatabase.Entity\AmazonDatabase.Entity.csproj", "{D728E6EA-DE01-4B5F-8155-F734C26CE093}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C8278E4E-7445-4E41-84CC-A3BD7C902159}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveApp.Services", "..\CognitiveServiceContainer\CognitiveApp.Services\CognitiveApp.Services.csproj", "{2BDCFF17-DE09-4BBB-AE12-C83F2B308ED9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveApp.Entities", "..\CognitiveServiceContainer\CognitiveApp.Entities\CognitiveApp.Entities.csproj", "{81389FDA-CB9B-4EC2-B39F-A5522ECE32C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64828D4A-2EFA-46DA-94D9-3BF723C9E301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64828D4A-2EFA-46DA-94D9-3BF723C9E301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64828D4A-2EFA-46DA-94D9-3BF723C9E301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64828D4A-2EFA-46DA-94D9-3BF723C9E301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132EFECE-093A-4BD6-A65C-C2CF0840EB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132EFECE-093A-4BD6-A65C-C2CF0840EB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132EFECE-093A-4BD6-A65C-C2CF0840EB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132EFECE-093A-4BD6-A65C-C2CF0840EB19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D728E6EA-DE01-4B5F-8155-F734C26CE093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D728E6EA-DE01-4B5F-8155-F734C26CE093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D728E6EA-DE01-4B5F-8155-F734C26CE093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D728E6EA-DE01-4B5F-8155-F734C26CE093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8278E4E-7445-4E41-84CC-A3BD7C902159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8278E4E-7445-4E41-84CC-A3BD7C902159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8278E4E-7445-4E41-84CC-A3BD7C902159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8278E4E-7445-4E41-84CC-A3BD7C902159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BDCFF17-DE09-4BBB-AE12-C83F2B308ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BDCFF17-DE09-4BBB-AE12-C83F2B308ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BDCFF17-DE09-4BBB-AE12-C83F2B308ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BDCFF17-DE09-4BBB-AE12-C83F2B308ED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81389FDA-CB9B-4EC2-B39F-A5522ECE32C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81389FDA-CB9B-4EC2-B39F-A5522ECE32C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81389FDA-CB9B-4EC2-B39F-A5522ECE32C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81389FDA-CB9B-4EC2-B39F-A5522ECE32C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E944A250-48AE-4D0A-BF1D-A69B90CEA7CB}
+	EndGlobalSection
+EndGlobal

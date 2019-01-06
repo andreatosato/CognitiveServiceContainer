@@ -16,7 +16,7 @@ services:
     environment:
       - Eula=accept
       - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
-      - ApiKey=a43b6e677dba4f60bcee7516a29b9e14
+      - ApiKey=b4b8e37f2bcc4b3b9731df8f0a8a773e
   language.api:
     image: mcr.microsoft.com/azure-cognitive-services/language
     expose:
@@ -24,4 +24,4 @@ services:
     environment:
       - Eula=accept
       - Billing=https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0
-      - ApiKey=a43b6e677dba4f60bcee7516a29b9e14
+      - ApiKey=b4b8e37f2bcc4b3b9731df8f0a8a773e

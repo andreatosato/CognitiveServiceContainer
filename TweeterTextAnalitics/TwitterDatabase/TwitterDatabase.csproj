@@ -13,4 +13,8 @@
     <PackageReference Include="TweetinviAPI" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\CognitiveServiceContainer\CognitiveApp.Services\CognitiveApp.Services.csproj" />
+  </ItemGroup>
+
 </Project>

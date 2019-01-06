@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CognitiveServiceContainer\CognitiveApp.Entities\CognitiveApp.Entities.csproj" />
+    <ProjectReference Include="..\..\CognitiveServiceContainer\CognitiveApp.Services\CognitiveApp.Services.csproj" />
+    <ProjectReference Include="..\AmazonDatabase.Entity\AmazonDatabase.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

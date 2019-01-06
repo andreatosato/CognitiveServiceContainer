@@ -37,6 +37,9 @@ namespace CognitiveApp.Services
             StringContent payloadContent = new StringContent(payloadSerialize, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{_projectId}/url", payloadContent);
             response.EnsureSuccessStatusCode();
+            string result = await response.Content.ReadAsStringAsync();
+            if (result == "Error processing image")
+                return new CustomVisionResponse();
             return JsonConvert.DeserializeObject<CustomVisionResponse>(await response.Content.ReadAsStringAsync());
         }
     }

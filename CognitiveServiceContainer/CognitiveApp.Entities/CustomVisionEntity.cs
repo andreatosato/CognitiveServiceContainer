@@ -28,7 +28,7 @@ namespace CognitiveApp.Entities
         [JsonProperty("created")]
         public DateTimeOffset Created { get; set; }
         [JsonProperty("predictions")]
-        public List<Prediction> Predictions { get; set; }
+        public List<Prediction> Predictions { get; set; } = new List<Prediction>();
     }
 
     public partial class Prediction
