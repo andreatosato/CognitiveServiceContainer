@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model CustomVisionViewModel
+
+<h1> FROM URL</h1>
+<form asp-controller="CustomVision" asp-action="FromUrl" method="post">
+    <div class="form-group">
+        <label for="url">Inserisci un URL di una immagine pubblica</label>
+        <input type="text" id="url" name="url" class="form-control" placeholder="Inserisci un URL di una immagine pubblica" />
+    </div>
+    <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
+<br />
+<h1> FROM INPUT</h1>
+<form asp-controller="CustomVision" asp-action="FromByteArray" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="url">Carica una immagine locale</label>
+        <input type="file" name="imageSource" id="imageSource" class="form-control-file" />
+    </div>
+    <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
+<br />
+@if (Model != null)
+{
+    <div class="text-center">
+        <div class="row">
+            <div class="col-md-4"><b>TagId</b></div>
+            <div class="col-md-4"><b>Tag Name</b></div>
+            <div class="col-md-4"><b>Probability</b></div>
+        </div>
+        @foreach (var element in Model.Predictions)
+        {
+            <div class="row">
+                <div class="col-md-4">@element.TagId</div>
+                <div class="col-md-4">@element.TagName</div>
+                <div class="col-md-4">@element.Probability</div>
+            </div>
+        }
+    </div>
+}
+<br />
+<div class="jumbotron">
+    <h1 class="display-4">Esempi</h1>
+    <p>Esempi di immagini utilizzati:</p>
+    <a href="https://github.com/Horea94/Fruit-Images-Dataset" class="btn-link">Dataset</a>
+    OR
+    <p>
+        <img src="https://raw.githubusercontent.com/Horea94/Fruit-Images-Dataset/master/Test/Pineapple/12_100.jpg" />
+        https://raw.githubusercontent.com/Horea94/Fruit-Images-Dataset/master/Test/Pineapple/12_100.jpg
+    </p>
+    <p>
+        <img src="https://raw.githubusercontent.com/Horea94/Fruit-Images-Dataset/master/Test/Kaki/0_100.jpg" />
+        https://raw.githubusercontent.com/Horea94/Fruit-Images-Dataset/master/Test/Kaki/0_100.jpg
+    </p>
+    <p>
+        <img src="https://cdn.storage.growtheplanet.com/vegetables/thumb/Limone-5310b9e05dd3d0.21110355.png" />
+        https://cdn.storage.growtheplanet.com/vegetables/thumb/Limone-5310b9e05dd3d0.21110355.png
+    </p>
+    <p>
+        <img src="http://www.fructital.it/wp-content/uploads/2014/01/fragola1-300x300.jpg" />
+        http://www.fructital.it/wp-content/uploads/2014/01/fragola1-300x300.jpg
+    </p>
+    <p>
+        <img src="https://cdn.storage.growtheplanet.com/vegetables/thumb/clementina-5356739442b7e8.68463609.png" />
+        https://cdn.storage.growtheplanet.com/vegetables/thumb/clementina-5356739442b7e8.68463609.png
+    </p>
+</div>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARMWebApp", "ARMWebApp\ARMWebApp.csproj", "{B5B4A5B6-B50D-459C-8E5F-DF43FE50E6A7}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5CB7A893-D995-4E56-AE28-07BE12CD5C57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5B4A5B6-B50D-459C-8E5F-DF43FE50E6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B4A5B6-B50D-459C-8E5F-DF43FE50E6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B4A5B6-B50D-459C-8E5F-DF43FE50E6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B4A5B6-B50D-459C-8E5F-DF43FE50E6A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB7A893-D995-4E56-AE28-07BE12CD5C57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB7A893-D995-4E56-AE28-07BE12CD5C57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB7A893-D995-4E56-AE28-07BE12CD5C57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB7A893-D995-4E56-AE28-07BE12CD5C57}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D853537F-167E-43D3-9C62-B17CF06AECDE}
+	EndGlobalSection
+EndGlobal
