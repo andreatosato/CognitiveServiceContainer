@@ -8,9 +8,10 @@ namespace ARMWebApp
 {
     public class CustomVisionUtility
     {
-        public CustomVisionUtility()
+        public CustomVisionUtility(CustomVisionPredictionClient client, Guid projectId)
         {
-
+            Client = client;
+            ProjectId = projectId;
         }
 
         public CustomVisionPredictionClient Client { get; set; }

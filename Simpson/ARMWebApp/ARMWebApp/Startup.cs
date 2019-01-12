@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using ARMWebApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,11 +36,19 @@ namespace ARMWebApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddScoped<CustomVisionPredictionClient>((serviceProvider) => new CustomVisionPredictionClient() {
-                ApiKey = predictionKey,
-                Endpoint = $"https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/{projectId}/"
+
+            services.AddHttpClient<ICustomVision, CustomVision>("CustomVisionClient", c =>
+            {
+                c.BaseAddress = new Uri("http://simpsonvision.api/");
+                c.DefaultRequestHeaders.Add("Prediction-Key", predictionKey);
             });
 
+            services.AddTransient<ICustomVision, CustomVision>(service =>
+            {
+                var clientFactory = service.GetRequiredService<IHttpClientFactory>();
+                return new CustomVision(clientFactory.CreateClient("CustomVisionClient"), projectId);
+            });
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

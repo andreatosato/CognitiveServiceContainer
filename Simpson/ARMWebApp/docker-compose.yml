@@ -6,3 +6,12 @@ services:
     build:
       context: .
       dockerfile: ARMWebApp/Dockerfile
+  simpsonvision.api:
+    image: ${DOCKER_REGISTRY-}simpsonvision.api
+    build:
+      context: './SimpsonCustomVision.DockerFile.Linux'
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    ports:
+      - "8081:80"
