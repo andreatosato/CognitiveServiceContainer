@@ -7,6 +7,7 @@ namespace ARMWebApp.Models
 {
     public class CustomVisionViewModel
     {
+        public string ImageUrl{ get; set; }
         public string ImageSource { get; set; }
         public IEnumerable<PredictionsViewModel> Predictions { get; set; }
     }

@@ -50,23 +50,27 @@
     OR
     <p>
         <img src="https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/bart_simpson_31.jpg" />
-        https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/bart_simpson_31.jpg
+        <span style="font-size: 8pt">https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/bart_simpson_31.jpg</span>
     </p>
     <p>
-        <img src="https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/SimpsonFamily/simpsons-family-background-image-ipod.jpg" />
-        https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/SimpsonFamily/simpsons-family-background-image-ipod.jpg
+        <img src="https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/SimpsonFamily/simpsons-family-background-image-ipod.jpg" width="300" />
+        <span style="font-size: 7pt">https://raw.githubusercontent.com/andreatosato/CognitiveServiceContainer/master/Simpson/Test/SimpsonFamily/simpsons-family-background-image-ipod.jpg</span>
     </p>
     <p>
-        <img src="https://vignette.wikia.nocookie.net/doblaje-fanon/images/b/bd/Homer_Simpson.png/revision/latest?cb=20181123014115&path-prefix=es" />
-        https://vignette.wikia.nocookie.net/doblaje-fanon/images/b/bd/Homer_Simpson.png/revision/latest?cb=20181123014115&path-prefix=es
+        <img src="https://vignette.wikia.nocookie.net/simpsons/images/0/02/Homer_Simpson_2006.png/revision/latest?cb=20180504085906&path-prefix=it" />
+        <span style="font-size: 8pt">https://vignette.wikia.nocookie.net/simpsons/images/0/02/Homer_Simpson_2006.png/revision/latest?cb=20180504085906&path-prefix=it</span>
+    </p>
+    <p>
+        <img src="https://www.tvzoom.it/wp-content/uploads/2017/07/homer.png" />
+        <span style="font-size: 8pt">https://www.tvzoom.it/wp-content/uploads/2017/07/homer.png</span>
     </p>
     <p>
         <img src="https://vignette.wikia.nocookie.net/animatedmusclewomen/images/0/0b/Marge_Simpson.png/revision/latest?cb=20150311195902" />
-        https://vignette.wikia.nocookie.net/animatedmusclewomen/images/0/0b/Marge_Simpson.png/revision/latest?cb=20150311195902
+        <span style="font-size: 8pt">https://vignette.wikia.nocookie.net/animatedmusclewomen/images/0/0b/Marge_Simpson.png/revision/latest?cb=20150311195902</span>
     </p>
     <p>
         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Lisa_Simpson.png/220px-Lisa_Simpson.png" />
-        https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Lisa_Simpson.png/220px-Lisa_Simpson.png
+        <span style="font-size: 8pt">https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Lisa_Simpson.png/220px-Lisa_Simpson.png</span>
     </p>
 </div>
 
@@ -93,6 +97,12 @@
                 @foreach(var pred in Model.Predictions)
                 {
                     <text>
+                    drawText(
+                        @pred.BoundingBox.Left * image.width,
+                        @pred.BoundingBox.Top * image.height,
+                        '@pred.TagName',
+                        ctx
+                    );
                     drawRectangle(@pred.BoundingBox.Left * image.width,
                         @pred.BoundingBox.Top * image.height,
                         @pred.BoundingBox.Width * image.width,
@@ -101,9 +111,19 @@
                     </Text>
                 }
             };
-            image.onerror = function () { alert('error image');}
-            image.src = 'data:image/jpeg;charset=utf-8;base64,' + '@Model.ImageSource';
-
+            image.onerror = function () { alert('error image'); }
+            @if (string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <Text>
+                image.src = 'data:image/jpeg;charset=utf-8;base64,@Model.ImageSource';
+                </Text>
+            }
+            else
+            {
+                <Text>
+                    image.src = '@Model.ImageUrl';
+                </Text>
+            }
             </text>
         }
     }
@@ -114,5 +134,10 @@
         ctx.lineWidth = '2';
         ctx.rect(left, top, width, height);
         ctx.stroke();
+    }
+    function drawText(left, top, tagName, ctx) {
+        ctx.font = "bold 13px Arial";
+        ctx.fillStyle = "red";
+        ctx.fillText(tagName, left, top + 15);
     }
 </script>

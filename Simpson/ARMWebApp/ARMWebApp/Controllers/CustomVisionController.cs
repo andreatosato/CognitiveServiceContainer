@@ -34,7 +34,7 @@ namespace ARMWebApp.Controllers
             var response = await _customVision.FromUrlImage(new Uri(url));
             var viewModel = new CustomVisionViewModel
             {
-                ImageSource = $"data:image/png;base64,{Convert.ToBase64String(await GetImageAsync(url))}",
+                ImageUrl = url,
                 Predictions = response.Predictions.OrderByDescending(x => x.Probability).Select(x => new PredictionsViewModel
                 {
                     Probability = x.Probability,
@@ -60,11 +60,12 @@ namespace ARMWebApp.Controllers
                 await imageSource.CopyToAsync(ms);
                 ms.Position = 0;
                 var response = await _customVision.FromByteArrayImage(ms);
-                ms.Position = 0;
-                string imageBase64 = Convert.ToBase64String(ms.ToArray());
+                MemoryStream imageOutput = new MemoryStream();                
+                await imageSource.CopyToAsync(imageOutput);
+                imageOutput.Position = 0;
                 var viewModel = new CustomVisionViewModel
                 {
-                    ImageSource = imageBase64,
+                    ImageSource = Convert.ToBase64String(imageOutput.ToArray()),
                     Predictions = response.Predictions.OrderByDescending(x => x.Probability).Select(x => new PredictionsViewModel
                     {
                         Probability = x.Probability,
