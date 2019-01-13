@@ -75,10 +75,7 @@
 </div>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        debugger
-        draw();
-    });
+   
     function draw() {
         @if (Model != null)
         {
@@ -115,7 +112,7 @@
             @if (string.IsNullOrEmpty(Model.ImageUrl))
             {
                 <Text>
-                image.src = 'data:image/jpeg;charset=utf-8;base64,@Model.ImageSource';
+                image.src = 'data:image/jpeg;base64,@Html.Raw(Model.ImageSource)';
                 </Text>
             }
             else
@@ -140,4 +137,9 @@
         ctx.fillStyle = "red";
         ctx.fillText(tagName, left, top + 15);
     }
+
+    draw();
+    //document.addEventListener("DOMContentLoaded", function () {
+    //    draw();
+    //});
 </script>

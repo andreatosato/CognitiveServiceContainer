@@ -2,14 +2,14 @@ version: '3.4'
 
 services:
   armwebapp:
-    image: ${DOCKER_REGISTRY-}armwebapp
+    image: registrydemosession.azurecr.io/armwebapp
     build:
       context: .
       dockerfile: ARMWebApp/Dockerfile
     depends_on:
       - simpsonvision.api
   simpsonvision.api:
-    image: ${DOCKER_REGISTRY-}simpsonvision.api
+    image: registrydemosession.azurecr.io/simpsonvision.api
     build:
       context: './SimpsonCustomVision.DockerFile.Linux'
       dockerfile: Dockerfile

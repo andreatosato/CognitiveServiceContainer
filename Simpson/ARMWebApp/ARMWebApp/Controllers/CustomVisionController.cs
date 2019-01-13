@@ -63,9 +63,10 @@ namespace ARMWebApp.Controllers
                 MemoryStream imageOutput = new MemoryStream();                
                 await imageSource.CopyToAsync(imageOutput);
                 imageOutput.Position = 0;
+                string imageBase64 = Convert.ToBase64String(imageOutput.ToArray());
                 var viewModel = new CustomVisionViewModel
                 {
-                    ImageSource = Convert.ToBase64String(imageOutput.ToArray()),
+                    ImageSource = imageBase64,
                     Predictions = response.Predictions.OrderByDescending(x => x.Probability).Select(x => new PredictionsViewModel
                     {
                         Probability = x.Probability,

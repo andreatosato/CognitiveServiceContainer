@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   cognitiveapp:
-    image: demosessionsregistry.azurecr.io/cognitiveapp
+    image: registrydemosession.azurecr.io/cognitiveapp
     expose:
       - "80"
       - "443"
@@ -14,7 +14,7 @@ services:
       - language.api
       - customvision.api
   customvision.api:
-    image: demosessionsregistry.azurecr.io/customvision.api
+    image: registrydemosession.azurecr.io/customvision.api
     expose:
       - "80"
     ports:
