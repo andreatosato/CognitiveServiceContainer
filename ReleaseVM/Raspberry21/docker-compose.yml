@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  armwebapp:
+    image: registrydemosession.azurecr.io/armwebapp2.1
+    depends_on:
+      - simpsonvision.api
+  simpsonvision.api:
+    image: registrydemosession.azurecr.io/simpsonvision.api
+    expose:
+      - "80"
+    ports:
+      - "8081:80"
