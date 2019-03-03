@@ -1,0 +1,45 @@
+﻿@model IndexViewModel
+@{
+        ViewData["Title"] = "Home Page";
+}
+
+<h4>C# Client</h4>
+<form asp-controller="Home" asp-action="GetLanguage" method="post">
+        <div class="form-group">
+                <label for="text">Inserisci una frase di prova</label>
+                <input type="text" asp-for="Text" class="form-control" placeholder="Inserisci una frase di prova" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
+
+<h4>JS Client</h4>
+<form>
+        <div class="form-group">
+                <label for="text">Inserisci una frase di prova</label>
+                <input type="text" id="TextJS" class="form-control" placeholder="Inserisci una frase di prova" />
+        </div>
+        <br />
+        <button type="button" class="btn btn-primary" onclick="SendData()">Analizza</button>
+</form>
+<script type="text/javascript">
+        function SendData()
+        {
+                var text = document.getElementById("TextJS").value;
+                var request = {
+                        documents: [{ id: 1, text: text }]
+                }
+                fetch("http://localhost:5000/text/analytics/v2.0/languages", {
+                        method: "POST",
+                        headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json-patch+json'
+                        },
+                        body: JSON.stringify(request)
+                }).then(res => {
+                        console.log("Request complete! response:", res);
+                        }).catch(function (error) {
+                                console.log("error" + error);
+                        });
+        }
+</script>

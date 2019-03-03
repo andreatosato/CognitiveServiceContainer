@@ -1,0 +1,33 @@
+﻿@model ResultViewModel
+@{
+        ViewData["Title"] = "Result Page";
+}
+
+<div class="text-center">
+        <h1 class="display-4">Result</h1>
+</div>
+
+<table class="table table-striped">
+        <thead>
+                <tr>
+                        <th>Name</th>
+                        <th>Iso</th>
+                        <th>Score</th>
+                </tr>
+        </thead>
+        <tbody>
+                @foreach (var d in Model.Response.Documents)
+                {
+                        foreach (var dl in d.DetectedLanguage)
+                        {
+                                @Html.Raw(@"<tr>
+                                        <td>" + dl.Name + @"</td>
+                                        <td>" + dl.Iso6391Name + @"</td>
+                                        <td>" + dl.Score + @"</td>
+                                </tr>");
+                        }
+                }
+        </tbody>
+</table>
+
+<a href='javascript:history.go(-1)'>Back</a>
