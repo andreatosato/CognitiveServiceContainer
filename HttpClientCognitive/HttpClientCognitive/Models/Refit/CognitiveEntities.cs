@@ -34,7 +34,7 @@ namespace HttpClientCognitive.Models
     public class LanguageResponse
     {
         [JsonProperty("documents")]
-        public IEnumerable<DocumentLanguageResponse> Documents { get; set; }
+        public List<DocumentLanguageResponse> Documents { get; set; }
         [JsonProperty("errors")]
         public IEnumerable<Error> Errors { get; set; }
     }

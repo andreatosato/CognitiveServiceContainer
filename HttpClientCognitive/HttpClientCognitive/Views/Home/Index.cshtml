@@ -12,6 +12,15 @@
         <br />
         <button type="submit" class="btn btn-primary">Analizza</button>
 </form>
+<h4>SDK C# Client</h4>
+<form asp-controller="Home" asp-action="GetLanguageSDK" method="post">
+        <div class="form-group">
+                <label for="text">Inserisci una frase di prova</label>
+                <input type="text" asp-for="Text" class="form-control" placeholder="Inserisci una frase di prova" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Analizza</button>
+</form>
 
 <h4>JS Client</h4>
 <form>
@@ -29,7 +38,7 @@
                 var request = {
                         documents: [{ id: 1, text: text }]
                 }
-                fetch("http://localhost:5000/text/analytics/v2.0/languages", {
+                fetch("https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0", {
                         method: "POST",
                         headers: {
                                 'Accept': 'application/json',
